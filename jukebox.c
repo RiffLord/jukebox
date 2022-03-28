@@ -1,5 +1,5 @@
 /*
- *  JUKEBOX ALBUM SUGGESTOR, v0.1
+ *  JUKEBOX ALBUM SUGGESTOR, v0.2
  *
  *  @author: Bruno Pezer
  *  11/03/2022
@@ -13,15 +13,12 @@
 #define LINECHARS 500   //  Maximum album name length
 #define MAXNUM    5     //  Maximum number of digits for the string containing the number of albums.
 
-//  Path to the file containing the list of albums in the user's library
-const char *PATH = "C:\\Users\\Bruno\\src\\c\\jukebox\\res\\albums";
-
-const char *program_version = "\nJUKEBOX 0.1";
+const char *program_version = "\nJUKEBOX 0.2";
 const char *bug_address = "<bruno.pezer@tutanota.com>";
 
 //  Program documentation
-static char doc[] = "\nJUKEBOX is a tool for suggesting albums to listen to from the user's collection\nThe program scans the user's music library which should previously be stored in a text file\nand suggests a random album from the list.\nJUKEBOX is intended for users with large digital libraries of music, in order to help them rediscover\nalbums or artists which can easily be buried and forgotten on their hard drives.\n";
-static char usage[] = "\nUSAGE>If JUKEBOX has never been run before, the user must first generate the text file with the list of directories containing music.\nOpen a PowerShell instance and navigate to the directory containing this program, then input the following commands:\n\n\t$Albums = Get-ChildItem -Directory -Recurse\n\t$Albums.Count | Out-File res\albums\n\t$Albums.Name | Out-File res\albums -Append";
+static char doc[] = "\nJUKEBOX is a tool for suggesting albums to listen to from the user's collection.\nThe program scans the user's music library which should previously be stored in a text file\nand suggests a random album from the list.\nJUKEBOX is intended for users with large digital libraries of music, in order to help them rediscover\nalbums or artists which can easily be buried and forgotten on their hard drives.\n";
+static char usage[] = "\nUSAGE> If JUKEBOX has never been run before, the user must first generate the text file with the list of directories containing music.\nOpen a PowerShell instance and navigate to the directory containing this program, then input the following commands:\n\n\t$Albums = Get-ChildItem -Directory -Recurse\n\t$Albums.Count | Out-File res\\albums -Encoding ASCII\n\t$Albums.Name | Out-File res\\albums -Append -Encoding ASCII\n\nAfter generating the file, copy the full file path and pass it to Jukebox.\n\nEXAMPLE> jukebox <filepath>\n";
 
 void read_file(const char *filename) {
     FILE *cfPtr;
@@ -59,8 +56,11 @@ int main(int argc, char *argv[]) {
         if (strcmp(argv[1], "help") == 0) {
             puts(program_version);
             puts(doc);
+            puts(usage);
             printf("Send bug reports to %s\n", bug_address);
             return 0;
-        } else puts("Please type \"jukebox help\" for information.");
-    } else read_file(PATH);
+        } else read_file(argv[1]);
+    } else {
+        puts("Error. No input file specified.\nPlease type \"jukebox help\" for information.");
+    }
 }
