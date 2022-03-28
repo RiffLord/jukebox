@@ -1,0 +1,22 @@
+JUKEBOX ALBUM SUGGESTOR v0.1
+
+@author: Bruno Pezer
+11/03/2022
+
+JUKEBOX is a simple command line program, intended to propose listening suggestions
+to users with large digital music libraries. The program reads the users collection
+from a text file, selecting one at random and printing it on screen. A simple PowerShell
+script is used to automatically generate the list of albums or directories containing music.
+To aid the program, the number of items is included at the top of this file.
+The program reads through the file, and generates a number less than or equal to the number
+of items contained in the file. It subsequently identifies the corresponding album within the list
+and prints it to the screen.
+
+1. Open the file containing the list.
+2. Read the first line to obtain the number of items.
+    2a. Convert the string to an integer, x.
+    2b. Generate a random integer between 1 and x + 1.
+        The offset is to account for the fact that line 0 contains
+        the number of albums. Therefore there are x + 1 lines of text
+        in the file.
+3. Find the line corresponding to x + 1 within the file and print it.
