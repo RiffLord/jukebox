@@ -1,19 +1,25 @@
-/*
- *  JUKEBOX ALBUM SUGGESTOR, v0.2
- *
- *  @author: Bruno Pezer
- *  11/03/2022
+/**
+ * @file    jukebox.c
+ * @author  Bruno Pezer (bruno.pezer@tutanota.com)
+ * @brief   
+ * @version 0.3
+ * @date    2022-11-01
+ * 
+ * @copyright NO COPYRIGHT !(c) 2022
+ * 
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <wchar.h>
+#include <locale.h>
 
 #define LINECHARS 500   //  Maximum album name length
 #define MAXNUM    5     //  Maximum number of digits for the string containing the number of albums.
 
-const char *program_version = "\nJUKEBOX 0.2";
+const char *program_version = "\nJUKEBOX 0.3";
 const char *bug_address = "<bruno.pezer@tutanota.com>";
 
 //  Program documentation
@@ -34,7 +40,7 @@ void read_file(const char *filename) {
         while (!feof(cfPtr)) {
             fgets(album, LINECHARS, cfPtr);
             if (currentline == album_suggestion) {
-                printf("%s", album);
+		        printf("%s", album);
                 break;
             }
             currentline++;
@@ -49,10 +55,10 @@ void parse_str(char *str) {
         *str = tolower(*str);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
     srand(time(NULL));
     if (argc > 1) {
-        parse_str(argv[1]);
+        //parse_str(argv[1]);
         if (strcmp(argv[1], "help") == 0) {
             puts(program_version);
             puts(doc);
